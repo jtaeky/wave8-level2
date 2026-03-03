@@ -12,6 +12,7 @@
 
     <!-- Step 4 & 5: Link your external CSS file so the HTML elements get styled -->
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js"defer></script>
   </head>
 
   <body>
@@ -42,28 +43,23 @@
     <!-- Options:
          - value="no"  text "No"
          - value="yes" text "Yes" -->
-
-    <!-- Step 11: Dropdown 2 = Recognized Device? -->
+     <!-- Step 11: Dropdown 2 = Recognized Device? -->
     <!-- Give it id="recognizedDevice" -->
     <!-- Options:
          - value="yes" text "Yes"
          - value="no"  text "No" -->
-
     <!-- Step 12: Add a button to run the scan -->
     <!-- Give it id="scanBtn" and class="btn" -->
     <!-- Button text: "Run Security Scan" -->
-
     <!-- Step 13: Add a message paragraph under the button -->
     <!-- Give it id="message" and class="message" -->
     <!-- JavaScript will show warnings and helpful tips here -->
-
     <!-- Step 14: Create the RIGHT card (status report) -->
     <!-- Give it class="card" -->
     <!-- Add a header with:
          - an <h1> like "Threat Status"
          - a badge like "Report"
          Use class="header" and class="badge" -->
-
     <!-- Step 15: Add a status box to display the final decision -->
     <!-- Create a div class="statusBox" -->
     <!-- Inside it, add:
@@ -97,13 +93,45 @@
 
         <div class="row">
           <div>
-            <label for="unusualLocation">Unusual Location?</label>
-            <select id="unusualLocation">
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
-            </select>
+               <label for="unusualLocation">Unusual Location?</label>
+               <select id="unusualLocation">
+               <option value="no">No</option>
+               <option value="yes">Yes</option>
+               </select>
+               <label for="recognizedDevice">Recognized Device?</label>
+               <select id="recognizedDevice">
+               <option value="no">No</option>
+               <option value="yes">Yes</option>
+               </select>
+               <button id="scanBtn" class="btn">Run Security Scan</button>
+               <p id="message" class="message"></p>
           </div>
 </section>
+<section class="card">
+     <div class="header">
+          <h1>Login Threat Status</h1>
+          <span class="badge">Security Scan</span>
+     </div>
+     <div id="statusBox">
+          <h2>Status</h2>
+          <span id="statusText"></span>
+          <span id="statusDetails"></span>
+     </div>
+</section>
+<div class="kv">
+  <span>Failed Attempts:</span>
+  <span id="attemptsOut"></span>
+</div>
+
+<div class="kv">
+  <span>Unusual Location:</span>
+  <span id="locationOut"></span>
+</div>
+
+<div class="kv">
+  <span>Recognized Device:</span>
+  <span id="deviceOut"></span>
+</div>
 
 </main>
 

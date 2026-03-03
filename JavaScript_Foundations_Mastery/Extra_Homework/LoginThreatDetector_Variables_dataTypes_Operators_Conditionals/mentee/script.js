@@ -16,6 +16,104 @@
 // - location output              → id="locationOut"
 // - device output                → id="deviceOut"
 
+const ids = [
+"failedAttempts",
+"unusualLocation",
+"recognizedDevice",
+"scanBtn",
+"message",
+"statusText",
+"statusDetails",
+"attemptsOut",
+"locationOut",
+"deviceOut"
+]
+
+const el = {}
+
+ids.forEach(id => {
+    el[id] = document.getElementById(id)
+})
+
+el.scanBtn.addEventListener("click", decisionLogic)
+
+function decisionLogic(){
+    let status = ""
+    let details = ""
+
+    const failedAttempts = Number(el.failedAttempts.value)
+    const unusualLocation = el.unusualLocation.value
+    const recognizedDevice = el.recognizedDevice.value
+
+    const unusual = unusualLocation === "yes"
+    const recognized = recognizedDevice === "yes"
+
+    el.attemptsOut.textContent = failedAttempts
+    el.locationOut.textContent = unusual ? "Yes" : "No"
+    el.deviceOut.textContent = recognized ? "Yes" : "No"
+
+    if(isNaN(failedAttempts) || failedAttempts<0){
+        console.log("naw")
+        return
+    } 
+
+    if(failedAttempts >= 5){
+        status = "Account Locked"
+        details = "too many fails"
+    }else if(unusual && !recognized){
+    status = "Suspicious"
+    details = "Login from an unusual location on an unrecognized device."
+    }else if(failedAttempts >= 3 && unusual){
+    status = "Suspicious"
+    details = "Multiple failed attempts from an unusual location."
+    }else{
+    status = "Approved"
+    details = "Login attempt appears safe."
+    }
+
+    el.statusText.textContent = status
+    el.statusDetails.textContent = details
+
+    el.statusText.classList.remove("safe", "warn", "danger")
+
+    if (status === "Approved") {
+    el.statusText.classList.add("safe")
+    el.message.textConten ="Tip: Keep your device recognized for faster logins."
+
+    } else if (status === "Suspicious") {
+    el.statusText.classList.add("warn")
+    el.message.textContent ="Tip: Turn on 2FA."
+
+
+    } else if (status === "Account Locked") {
+    el.statusText.classList.add("danger")
+    el.message.textContent ="Tip: Use 'Forgot Password' to recover account."
+
+}
+}
+
+
+// - If suspicious: "Tip: Turn on 2FA."
+// - If locked: "Tip: Use 'Forgot Password' to recover account."
+// - If approved: "Tip: Keep your device recognized for faster logins."
+
+
+// ## Decision rules (order matters)
+
+// 1. If **failedAttempts >= 5** → **ACCOUNT LOCKED**
+// 2. Else if **unusual location = true** AND **recognized device = false** → **SUSPICIOUS**
+// 3. Else if **failedAttempts >= 3** AND **unusual location = true** → **SUSPICIOUS**
+// 4. Else → **LOGIN APPROVED**
+
+// ## Learning constraint
+
+// The _decision logic_ uses only:
+
+// - Variables
+// - Data types (number/string/boolean)
+// - Operators
+// - Conditionals
+
 // Step 2: Add a click event listener to the Scan button
 // When clicked, run your security decision logic
 
